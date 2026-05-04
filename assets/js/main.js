@@ -1,0 +1,131 @@
+(function () {
+  'use strict';
+
+  /* ============================================================
+   * MENU MOBILE
+   * ============================================================ */
+  function initMenuMobile() {
+    const toggle = document.getElementById('menuToggle');
+    const nav = document.getElementById('nav');
+    if (!toggle || !nav) return;
+
+    const closeMenu = () => {
+      toggle.classList.remove('open');
+      nav.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Abrir menu');
+    };
+
+    toggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('open');
+      toggle.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      toggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    });
+
+    // Fechar menu ao clicar em um link
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+    // Fechar com Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeMenu();
+    });
+  }
+
+  /* ============================================================
+   * SCROLL SUAVE PARA ÂNCORAS
+   * ============================================================ */
+  function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const id = anchor.getAttribute('href');
+        if (id === '#' || id.length < 2) return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        const headerHeight = document.getElementById('header')?.offsetHeight || 72;
+        const top = target.getBoundingClientRect().top + window.pageYOffset - headerHeight + 1;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+  }
+
+  /* ============================================================
+   * HEADER COM SOMBRA AO ROLAR
+   * ============================================================ */
+  function initHeaderScroll() {
+    const header = document.getElementById('header');
+    if (!header) return;
+
+    let lastScrollY = window.scrollY;
+    const update = () => {
+      header.classList.toggle('scrolled', window.scrollY > 20);
+      lastScrollY = window.scrollY;
+    };
+
+    update();
+    window.addEventListener('scroll', () => {
+      requestAnimationFrame(update);
+    }, { passive: true });
+  }
+
+  /* ============================================================
+   * REVEAL ON SCROLL (IntersectionObserver)
+   * ============================================================ */
+  function initReveal() {
+    const reveals = document.querySelectorAll('.reveal');
+    if (!reveals.length || !('IntersectionObserver' in window)) {
+      reveals.forEach(el => el.classList.add('visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  }
+
+  /* ============================================================
+   * WHATSAPP FLUTUANTE (aparece após sair do hero)
+   * ============================================================ */
+  function initWppFloat() {
+    const wpp = document.getElementById('wppFloat');
+    const sobre = document.getElementById('sobre');
+    if (!wpp || !sobre) return;
+
+    if (!('IntersectionObserver' in window)) {
+      wpp.classList.add('visible');
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        wpp.classList.toggle('visible', entry.isIntersecting || window.scrollY > entry.target.offsetTop);
+      });
+    }, { threshold: 0 });
+
+    observer.observe(sobre);
+
+    // Fallback: sempre visível depois de scroll significativo
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 600) wpp.classList.add('visible');
+    }, { passive: true });
+  }
+
+  /* ============================================================
+   * BOOT
+   * ============================================================ */
+  document.addEventListener('DOMContentLoaded', () => {
+    initMenuMobile();
+    initSmoothScroll();
+    initHeaderScroll();
+    initReveal();
+    initWppFloat();
+  });
+})();
