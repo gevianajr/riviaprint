@@ -551,3 +551,54 @@ section {
 }
 
 .produto-card.hidden { display: none; }
+
+/* ========== COMO ENCOMENDAR ========== */
+.como {
+  background: var(--color-bg);
+}
+
+.como-header {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.passos {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  counter-reset: passo;
+}
+
+@media (min-width: 768px) {
+  .passos { grid-template-columns: repeat(4, 1fr); }
+}
+
+.passo {
+  background: var(--color-bg-soft);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  position: relative;
+  border: 1px solid var(--color-border);
+}
+
+.passo-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--color-brand);
+  color: #fff;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 18px;
+  margin-bottom: var(--space-sm);
+}
+
+.passo h3 {
+  margin-bottom: var(--space-xs);
+}
+
+.passo p {
+  font-size: 14px;
+}
