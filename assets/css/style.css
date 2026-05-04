@@ -147,3 +147,112 @@ section {
   outline-offset: 3px;
   border-radius: 4px;
 }
+
+/* ========== HEADER ========== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: var(--transition);
+}
+
+.header.scrolled {
+  border-bottom-color: var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+  gap: var(--space-md);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.logo-text {
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.5px;
+}
+.logo-text-light {
+  color: var(--color-text-muted);
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+.nav-list {
+  display: flex;
+  gap: 28px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.nav-list a {
+  color: var(--color-text-muted);
+}
+.nav-list a:hover {
+  color: var(--color-text);
+}
+
+.header-cta {
+  padding: 10px 20px;
+  font-size: 13px;
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+}
+.menu-toggle span {
+  width: 22px;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .nav {
+    position: fixed;
+    inset: var(--header-height) 0 0 0;
+    background: var(--color-bg);
+    padding: var(--space-lg) var(--space-md);
+    transform: translateX(100%);
+    transition: var(--transition);
+  }
+  .nav.open {
+    transform: translateX(0);
+  }
+  .nav-list {
+    flex-direction: column;
+    gap: var(--space-md);
+    font-size: 24px;
+  }
+  .nav-list a {
+    color: var(--color-text);
+    font-weight: 600;
+  }
+  .menu-toggle {
+    display: flex;
+  }
+  .menu-toggle.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+  .menu-toggle.open span:nth-child(2) { opacity: 0; }
+  .menu-toggle.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+  .header-cta {
+    display: none;
+  }
+}
