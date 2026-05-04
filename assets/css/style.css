@@ -256,3 +256,94 @@ section {
     display: none;
   }
 }
+
+/* ========== HERO ========== */
+.hero {
+  position: relative;
+  padding-top: var(--space-lg);
+  padding-bottom: 0;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  align-items: center;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1.1fr 1fr;
+    gap: var(--space-xl);
+  }
+}
+
+.hero-subtitle {
+  font-size: clamp(16px, 1.5vw, 18px);
+  margin: var(--space-md) 0 var(--space-lg);
+  max-width: 480px;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: var(--space-sm);
+  flex-wrap: wrap;
+}
+
+.hero-products {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  position: relative;
+}
+
+.hero-card {
+  aspect-ratio: 1;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+.hero-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.hero-card--yellow { background: var(--color-yellow-soft); transform: rotate(-3deg); }
+.hero-card--red    { background: var(--color-red-soft); transform: rotate(2deg); margin-top: 24px; }
+.hero-card--green  { background: var(--color-green-soft); transform: rotate(4deg); margin-top: -12px; }
+.hero-card--blue   { background: var(--color-blue-soft); transform: rotate(-2deg); }
+
+.hero-card img { width: 100%; height: 100%; object-fit: contain; padding: 16px; }
+
+/* Bolinhas decorativas */
+.deco {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+}
+.deco-1 { top: 10%; right: 30%; width: 14px; height: 14px; background: var(--color-yellow); }
+.deco-2 { bottom: 15%; left: 42%; width: 8px; height: 8px; background: var(--color-red); }
+.deco-3 { top: 60%; left: 5%; width: 6px; height: 6px; background: var(--color-green); }
+
+/* Trust strip */
+.trust-strip {
+  background: var(--color-bg-soft);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: var(--space-sm) 0;
+  margin-top: var(--space-lg);
+}
+.trust-strip-inner {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  font-size: 13px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+@media (max-width: 640px) {
+  .trust-strip-inner { justify-content: flex-start; }
+}
