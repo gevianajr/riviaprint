@@ -181,15 +181,18 @@ section {
   color: var(--color-text);
 }
 
-.logo-text {
-  font-weight: 800;
-  font-size: 16px;
-  letter-spacing: -0.5px;
+.logo-img {
+  height: 40px;
+  width: auto;
+  display: block;
+  transition: var(--transition);
 }
-.logo-text-light {
-  color: var(--color-text-muted);
-  font-weight: 400;
-  margin-left: 4px;
+.logo:hover .logo-img {
+  transform: scale(1.04);
+}
+
+.logo-footer .logo-img {
+  height: 56px;
 }
 
 .nav-list {

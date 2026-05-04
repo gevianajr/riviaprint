@@ -20,3 +20,8 @@ npm-debug.log*
 # Env (caso futuramente use algo)
 .env
 .env.local
+
+# Node (sharp instalado apenas para script de otimizacao em scripts/optimize-images.js)
+node_modules/
+package.json
+package-lock.json

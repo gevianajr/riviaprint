@@ -253,7 +253,7 @@ Todos os tokens vivem em `assets/css/variables.css`. Convenção de prefixos:
 - **Título**: "Vamos conversar?"
 - **3 cards grandes** lado-a-lado (empilham em mobile):
   - **Instagram** (gradiente Insta no ícone) → `instagram.com/riviaprint`
-  - **WhatsApp** (verde no ícone) → `wa.me/5514981907087`
+  - **WhatsApp** (verde no ícone) → `wa.me/5514982276178`
   - **E-mail** (azul no ícone) → `mailto:contato@riviaprint.com.br`
 - Cada card mostra ícone grande, nome do canal, handle/número/email, e flecha "→"
 
@@ -310,7 +310,7 @@ Todos os tokens vivem em `assets/css/variables.css`. Convenção de prefixos:
   "name": "Rivia Print",
   "url": "https://riviaprint.com.br",
   "image": "https://riviaprint.com.br/assets/images/og-image.jpg",
-  "telephone": "+5514981907087",
+  "telephone": "+5514982276178",
   "email": "contato@riviaprint.com.br",
   "sameAs": ["https://www.instagram.com/riviaprint/"],
   "areaServed": "BR"

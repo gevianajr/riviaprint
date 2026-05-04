@@ -13,7 +13,7 @@
       "nome": "Polvo Articulado Amarelo",
       "categoria": "articulados",
       "preco": "A consultar",
-      "imagem": "assets/images/products/polvo-amarelo.jpg",
+      "imagem": "assets/images/products/polvo-amarelo.webp",
       "emoji": "🐙",
       "destaque": true,
       "descricao": "Polvo flexível impresso em 3D, ideal como fidget toy ou decoração."
@@ -23,50 +23,50 @@
       "nome": "Polvo Articulado Vermelho",
       "categoria": "articulados",
       "preco": "A consultar",
-      "imagem": "assets/images/products/polvo-vermelho.jpg",
+      "imagem": "assets/images/products/polvo-vermelho.webp",
       "emoji": "🐙",
       "destaque": true,
-      "descricao": "Versão vermelha glitter, com pontas pretas. Pura diversão."
+      "descricao": "Versão vermelha glitter com pontas pretas. Pura diversão."
     },
     {
       "id": "polvo-verde",
       "nome": "Polvo Articulado Verde",
       "categoria": "articulados",
       "preco": "A consultar",
-      "imagem": "assets/images/products/polvo-verde.jpg",
+      "imagem": "assets/images/products/polvo-verde.webp",
       "emoji": "🐙",
       "destaque": true,
       "descricao": "Versão verde brilhante. Cabe na mão e na decoração."
     },
     {
-      "id": "caixinha-copa-vermelha",
-      "nome": "Caixinha Figurinhas Copa 2026 — Vermelha",
-      "categoria": "copa",
-      "preco": "R$ 35,00",
-      "imagem": "assets/images/products/caixinha-copa-vermelha.jpg",
-      "emoji": "⚽",
+      "id": "polvo-azul",
+      "nome": "Polvo Articulado Azul",
+      "categoria": "articulados",
+      "preco": "A consultar",
+      "imagem": "assets/images/products/polvo-azul.webp",
+      "emoji": "🐙",
       "destaque": true,
-      "descricao": "Caixinha 3D resistente para colecionar suas figurinhas da Copa do Mundo 2026."
+      "descricao": "Versão azul royal com efeito metálico. Vibe oceano."
     },
     {
-      "id": "caixinha-copa-azul",
-      "nome": "Caixinha Figurinhas Copa 2026 — Azul",
+      "id": "caixinha-copa-2026",
+      "nome": "Caixinha das Figurinhas Copa 2026",
       "categoria": "copa",
       "preco": "R$ 35,00",
-      "imagem": "assets/images/products/caixinha-copa-azul.jpg",
+      "imagem": "assets/images/products/caixinhas-copa-6cores.webp",
       "emoji": "⚽",
       "destaque": false,
-      "descricao": "Versão azul. Várias cores disponíveis sob encomenda."
+      "descricao": "Caixinha 3D resistente para colecionar suas figurinhas da Copa do Mundo 2026. Disponível em 6 cores: vermelha, preta, amarela, azul, verde e roxa."
     },
     {
       "id": "personalizado-exemplo",
       "nome": "Peça Personalizada (sob encomenda)",
       "categoria": "personalizados",
-      "preco": "Orçamento",
+      "preco": "Orçamento sob medida",
       "imagem": "assets/images/products/personalizado-exemplo.jpg",
       "emoji": "🎁",
       "destaque": false,
-      "descricao": "Tem uma ideia? Mandamos um orçamento. Logos, presentes, peças únicas."
+      "descricao": "Tem uma ideia? Mandamos um orçamento. Logos, presentes, peças únicas, brindes corporativos."
     },
     {
       "id": "vaso-decorativo",
@@ -76,13 +76,13 @@
       "imagem": "assets/images/products/vaso-decorativo.jpg",
       "emoji": "🏺",
       "destaque": false,
-      "descricao": "Vaso com padrão geométrico moderno. Várias cores."
+      "descricao": "Vaso com padrão geométrico moderno. Várias cores e tamanhos."
     },
     {
       "id": "popculture-exemplo",
       "nome": "Figura Pop Culture (sob encomenda)",
       "categoria": "popculture",
-      "preco": "Orçamento",
+      "preco": "Orçamento sob medida",
       "imagem": "assets/images/products/popculture-exemplo.jpg",
       "emoji": "🎲",
       "destaque": false,

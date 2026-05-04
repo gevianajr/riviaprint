@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  const WHATSAPP_NUMBER = '5514981907087';
+  const WHATSAPP_NUMBER = '5514982276178';
   const DATA_URL = 'data/products.json';
 
   /**
