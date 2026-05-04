@@ -5,11 +5,28 @@
   const DATA_URL = 'data/products.json';
 
   /**
+   * Escapa caracteres HTML para prevenir XSS ao injetar dados em innerHTML.
+   * Defensivo: products.json é controlado pelo time, mas evita surpresas.
+   * @param {string} text
+   * @returns {string} Texto seguro pra usar em innerHTML
+   */
+  function escapeHtml(text) {
+    if (text == null) return '';
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  /**
    * Constrói URL do WhatsApp com mensagem pré-preenchida.
    * @param {string} produtoNome - Nome do produto (ou string vazia para mensagem genérica).
    * @returns {string} URL completa do WhatsApp.
    */
   function buildWhatsAppLink(produtoNome) {
+    // WhatsApp renderiza *texto* como negrito — por isso envolvemos o nome do produto.
     const baseMsg = produtoNome
       ? `Olá! Tenho interesse no produto: *${produtoNome}*`
       : 'Olá! Gostaria de fazer uma encomenda na Rivia Print.';
@@ -73,17 +90,17 @@
       const imgSrc = p.imagem;
       const fallbackEmoji = p.emoji || '📦';
       return `
-        <article class="produto-card" data-categoria="${p.categoria}" data-cor="${cor}">
+        <article class="produto-card" data-categoria="${escapeHtml(p.categoria)}" data-cor="${escapeHtml(cor)}">
           <div class="produto-card-img">
-            <img src="${imgSrc}" alt="${p.nome}" loading="lazy"
-                 onerror="this.style.display='none';this.parentElement.innerHTML='<span aria-hidden=\\'true\\'>${fallbackEmoji}</span>';">
+            <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(p.nome)}" loading="lazy"
+                 onerror="this.style.display='none';this.parentElement.innerHTML='<span aria-hidden=\\'true\\'>${escapeHtml(fallbackEmoji)}</span>';">
           </div>
           <div class="produto-card-body">
-            <h3 class="produto-card-nome">${p.nome}</h3>
-            <span class="produto-card-preco">${p.preco}</span>
-            <p class="produto-card-desc">${p.descricao}</p>
+            <h3 class="produto-card-nome">${escapeHtml(p.nome)}</h3>
+            <span class="produto-card-preco">${escapeHtml(p.preco)}</span>
+            <p class="produto-card-desc">${escapeHtml(p.descricao)}</p>
             <a href="${link}" target="_blank" rel="noopener" class="btn btn-primary produto-card-cta"
-               aria-label="Encomendar ${p.nome} pelo WhatsApp">
+               aria-label="Encomendar ${escapeHtml(p.nome)} pelo WhatsApp">
               Quero esse →
             </a>
           </div>
@@ -111,9 +128,9 @@
     container.innerHTML = destaques.map((p, i) => {
       const fallbackEmoji = p.emoji || '📦';
       return `
-        <div class="hero-card ${variants[i]}" title="${p.nome}">
-          <img src="${p.imagem}" alt="${p.nome}" loading="lazy"
-               onerror="this.style.display='none';this.parentElement.innerHTML='${fallbackEmoji}';">
+        <div class="hero-card ${variants[i]}" title="${escapeHtml(p.nome)}">
+          <img src="${escapeHtml(p.imagem)}" alt="${escapeHtml(p.nome)}" loading="lazy"
+               onerror="this.style.display='none';this.parentElement.innerHTML='<span aria-hidden=\\'true\\'>${escapeHtml(fallbackEmoji)}</span>';">
         </div>
       `;
     }).join('');
