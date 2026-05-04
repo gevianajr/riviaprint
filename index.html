@@ -170,6 +170,30 @@
         </div>
       </div>
     </section>
+
+    <!-- CATÁLOGO -->
+    <section id="produtos" class="catalogo">
+      <div class="container">
+        <div class="catalogo-header reveal">
+          <span class="section-label">Nosso catálogo</span>
+          <h2 class="section-title">Explore nossas linhas</h2>
+          <p class="section-subtitle">Toque em uma categoria para filtrar.</p>
+        </div>
+
+        <!-- Tabs renderizadas por products.js -->
+        <div class="catalogo-tabs" id="catalogoTabs" role="tablist" aria-label="Categorias de produtos">
+          <!-- Ex.: <button class="tab active" data-categoria="todos" role="tab">Todos</button> -->
+        </div>
+
+        <!-- Grid de produtos renderizado por products.js -->
+        <div class="produtos-grid" id="produtosGrid" aria-live="polite">
+          <!-- Ex.: <article class="produto-card">...</article> -->
+        </div>
+
+        <!-- Estado de loading inicial -->
+        <p class="catalogo-loading" id="catalogoLoading">Carregando produtos...</p>
+      </div>
+    </section>
   </main>
 
   <!-- FOOTER -->
