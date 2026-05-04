@@ -1,0 +1,102 @@
+{
+  "categorias": [
+    { "id": "articulados",    "nome": "Articulados",      "cor": "yellow" },
+    { "id": "copa",           "nome": "Linha Copa 2026",  "cor": "green" },
+    { "id": "personalizados", "nome": "Personalizados",   "cor": "blue" },
+    { "id": "decoracao",      "nome": "Decoração",        "cor": "red" },
+    { "id": "popculture",     "nome": "Pop Culture",      "cor": "blue" },
+    { "id": "chaveiros",      "nome": "Chaveiros",        "cor": "yellow" }
+  ],
+  "produtos": [
+    {
+      "id": "polvo-amarelo",
+      "nome": "Polvo Articulado Amarelo",
+      "categoria": "articulados",
+      "preco": "A consultar",
+      "imagem": "assets/images/products/polvo-amarelo.jpg",
+      "emoji": "🐙",
+      "destaque": true,
+      "descricao": "Polvo flexível impresso em 3D, ideal como fidget toy ou decoração."
+    },
+    {
+      "id": "polvo-vermelho",
+      "nome": "Polvo Articulado Vermelho",
+      "categoria": "articulados",
+      "preco": "A consultar",
+      "imagem": "assets/images/products/polvo-vermelho.jpg",
+      "emoji": "🐙",
+      "destaque": true,
+      "descricao": "Versão vermelha glitter, com pontas pretas. Pura diversão."
+    },
+    {
+      "id": "polvo-verde",
+      "nome": "Polvo Articulado Verde",
+      "categoria": "articulados",
+      "preco": "A consultar",
+      "imagem": "assets/images/products/polvo-verde.jpg",
+      "emoji": "🐙",
+      "destaque": true,
+      "descricao": "Versão verde brilhante. Cabe na mão e na decoração."
+    },
+    {
+      "id": "caixinha-copa-vermelha",
+      "nome": "Caixinha Figurinhas Copa 2026 — Vermelha",
+      "categoria": "copa",
+      "preco": "R$ 35,00",
+      "imagem": "assets/images/products/caixinha-copa-vermelha.jpg",
+      "emoji": "⚽",
+      "destaque": true,
+      "descricao": "Caixinha 3D resistente para colecionar suas figurinhas da Copa do Mundo 2026."
+    },
+    {
+      "id": "caixinha-copa-azul",
+      "nome": "Caixinha Figurinhas Copa 2026 — Azul",
+      "categoria": "copa",
+      "preco": "R$ 35,00",
+      "imagem": "assets/images/products/caixinha-copa-azul.jpg",
+      "emoji": "⚽",
+      "destaque": false,
+      "descricao": "Versão azul. Várias cores disponíveis sob encomenda."
+    },
+    {
+      "id": "personalizado-exemplo",
+      "nome": "Peça Personalizada (sob encomenda)",
+      "categoria": "personalizados",
+      "preco": "Orçamento",
+      "imagem": "assets/images/products/personalizado-exemplo.jpg",
+      "emoji": "🎁",
+      "destaque": false,
+      "descricao": "Tem uma ideia? Mandamos um orçamento. Logos, presentes, peças únicas."
+    },
+    {
+      "id": "vaso-decorativo",
+      "nome": "Vaso Decorativo Geométrico",
+      "categoria": "decoracao",
+      "preco": "A consultar",
+      "imagem": "assets/images/products/vaso-decorativo.jpg",
+      "emoji": "🏺",
+      "destaque": false,
+      "descricao": "Vaso com padrão geométrico moderno. Várias cores."
+    },
+    {
+      "id": "popculture-exemplo",
+      "nome": "Figura Pop Culture (sob encomenda)",
+      "categoria": "popculture",
+      "preco": "Orçamento",
+      "imagem": "assets/images/products/popculture-exemplo.jpg",
+      "emoji": "🎲",
+      "destaque": false,
+      "descricao": "Animes, jogos, super-heróis. Solicite o personagem que você quer."
+    },
+    {
+      "id": "chaveiro-exemplo",
+      "nome": "Chaveiro Personalizado",
+      "categoria": "chaveiros",
+      "preco": "A partir de R$ 15,00",
+      "imagem": "assets/images/products/chaveiro-exemplo.jpg",
+      "emoji": "🔑",
+      "destaque": false,
+      "descricao": "Chaveiro com nome, logo ou símbolo do seu time. Várias cores."
+    }
+  ]
+}
