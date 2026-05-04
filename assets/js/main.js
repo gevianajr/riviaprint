@@ -57,10 +57,8 @@
     const header = document.getElementById('header');
     if (!header) return;
 
-    let lastScrollY = window.scrollY;
     const update = () => {
       header.classList.toggle('scrolled', window.scrollY > 20);
-      lastScrollY = window.scrollY;
     };
 
     update();
