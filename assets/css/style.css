@@ -743,3 +743,106 @@ section {
   transform: translateX(4px);
   color: var(--color-text);
 }
+
+/* ========== FOOTER ========== */
+.footer {
+  background: #0A0A0A;
+  color: #fff;
+  padding-top: var(--space-xl);
+  margin-top: var(--space-lg);
+}
+.footer .logo,
+.footer h4 { color: #fff; }
+.footer .logo-text-light { color: #999; }
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+  padding-bottom: var(--space-lg);
+}
+@media (min-width: 768px) {
+  .footer-inner { grid-template-columns: 2fr 1fr 1.5fr 1fr; }
+}
+
+.footer-brand p {
+  color: #999;
+  margin-top: var(--space-sm);
+  font-size: 14px;
+  max-width: 280px;
+}
+
+.footer h4 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: var(--space-sm);
+  color: #999;
+  font-weight: 600;
+}
+
+.footer ul { display: flex; flex-direction: column; gap: var(--space-xs); }
+.footer ul a {
+  color: #ddd;
+  font-size: 14px;
+  transition: var(--transition);
+}
+.footer ul a:hover { color: var(--color-brand); }
+
+.footer-icons { display: flex; gap: var(--space-sm); }
+.footer-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+  transition: var(--transition);
+}
+.footer-icons a:hover {
+  background: var(--color-brand);
+  transform: translateY(-2px);
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: var(--space-md) 0;
+}
+.footer-bottom p {
+  text-align: center;
+  font-size: 13px;
+  color: #777;
+  margin: 0;
+}
+
+/* ========== WHATSAPP FLUTUANTE ========== */
+.wpp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  background: #25D366;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+  z-index: 99;
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+  transition: var(--transition);
+}
+.wpp-float.visible {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+.wpp-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 32px rgba(37, 211, 102, 0.5);
+}
