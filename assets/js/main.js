@@ -14,6 +14,7 @@
       nav.classList.remove('open');
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Abrir menu');
+      document.body.style.overflow = '';
     };
 
     toggle.addEventListener('click', () => {
@@ -21,6 +22,7 @@
       toggle.classList.toggle('open', isOpen);
       toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       toggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
     // Fechar menu ao clicar em um link

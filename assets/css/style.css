@@ -236,9 +236,12 @@ section {
     padding: var(--space-lg) var(--space-md);
     transform: translateX(100%);
     transition: var(--transition);
+    z-index: 99;
+    overflow-y: auto;
   }
   .nav.open {
     transform: translateX(0);
+    box-shadow: -4px 0 30px rgba(0, 0, 0, 0.08);
   }
   .nav-list {
     flex-direction: column;
