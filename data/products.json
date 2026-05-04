@@ -1,6 +1,6 @@
 {
   "categorias": [
-    { "id": "articulados",    "nome": "Articulados",      "cor": "yellow" },
+    { "id": "articulados",    "nome": "Brinquedos Sensoriais", "cor": "yellow" },
     { "id": "copa",           "nome": "Linha Copa 2026",  "cor": "green" },
     { "id": "personalizados", "nome": "Personalizados",   "cor": "blue" },
     { "id": "decoracao",      "nome": "Decoração",        "cor": "red" },
@@ -10,7 +10,7 @@
   "produtos": [
     {
       "id": "polvo-amarelo",
-      "nome": "Polvo Articulado Amarelo",
+      "nome": "Brinquedo Sensorial Amarelo",
       "categoria": "articulados",
       "preco": "A consultar",
       "imagem": "assets/images/products/polvo-amarelo.webp",
@@ -20,32 +20,32 @@
     },
     {
       "id": "polvo-vermelho",
-      "nome": "Polvo Articulado Vermelho",
+      "nome": "Brinquedo Sensorial Vermelho",
       "categoria": "articulados",
       "preco": "A consultar",
       "imagem": "assets/images/products/polvo-vermelho.webp",
       "emoji": "🐙",
-      "destaque": true,
+      "destaque": false,
       "descricao": "Versão vermelha glitter com pontas pretas. Pura diversão."
     },
     {
       "id": "polvo-verde",
-      "nome": "Polvo Articulado Verde",
+      "nome": "Brinquedo Sensorial Verde",
       "categoria": "articulados",
       "preco": "A consultar",
       "imagem": "assets/images/products/polvo-verde.webp",
       "emoji": "🐙",
-      "destaque": true,
+      "destaque": false,
       "descricao": "Versão verde brilhante. Cabe na mão e na decoração."
     },
     {
       "id": "polvo-azul",
-      "nome": "Polvo Articulado Azul",
+      "nome": "Brinquedo Sensorial Azul",
       "categoria": "articulados",
       "preco": "A consultar",
       "imagem": "assets/images/products/polvo-azul.webp",
       "emoji": "🐙",
-      "destaque": true,
+      "destaque": false,
       "descricao": "Versão azul royal com efeito metálico. Vibe oceano."
     },
     {
@@ -55,48 +55,48 @@
       "preco": "R$ 35,00",
       "imagem": "assets/images/products/caixinhas-copa-6cores.webp",
       "emoji": "⚽",
-      "destaque": false,
+      "destaque": true,
       "descricao": "Caixinha 3D resistente para colecionar suas figurinhas da Copa do Mundo 2026. Disponível em 6 cores: vermelha, preta, amarela, azul, verde e roxa."
     },
     {
-      "id": "personalizado-exemplo",
-      "nome": "Peça Personalizada (sob encomenda)",
+      "id": "personalizado-pet",
+      "nome": "Pet em 3D Personalizado",
       "categoria": "personalizados",
       "preco": "Orçamento sob medida",
-      "imagem": "assets/images/products/personalizado-exemplo.jpg",
-      "emoji": "🎁",
+      "imagem": "assets/images/products/personalizado-pet.webp",
+      "emoji": "🐶",
       "destaque": false,
-      "descricao": "Tem uma ideia? Mandamos um orçamento. Logos, presentes, peças únicas, brindes corporativos."
+      "descricao": "Eternize seu pet em uma peça 3D pintada à mão, com detalhes impressionantes. Presente único e cheio de afeto."
     },
     {
       "id": "vaso-decorativo",
-      "nome": "Vaso Decorativo Geométrico",
+      "nome": "Vaso Decorativo Orgânico",
       "categoria": "decoracao",
       "preco": "A consultar",
-      "imagem": "assets/images/products/vaso-decorativo.jpg",
+      "imagem": "assets/images/products/vaso-decorativo.webp",
       "emoji": "🏺",
-      "destaque": false,
-      "descricao": "Vaso com padrão geométrico moderno. Várias cores e tamanhos."
+      "destaque": true,
+      "descricao": "Vaso com formas orgânicas fluidas em duas cores. Personalize com sua marca ou cor preferida."
     },
     {
-      "id": "popculture-exemplo",
-      "nome": "Figura Pop Culture (sob encomenda)",
+      "id": "popculture-funko",
+      "nome": "Funko Pop Personalizado",
       "categoria": "popculture",
       "preco": "Orçamento sob medida",
-      "imagem": "assets/images/products/popculture-exemplo.jpg",
+      "imagem": "assets/images/products/popculture-funko.webp",
       "emoji": "🎲",
-      "destaque": false,
-      "descricao": "Animes, jogos, super-heróis. Solicite o personagem que você quer."
+      "destaque": true,
+      "descricao": "Funkos no estilo que você quiser: ídolos, personagens de anime, jogos, séries ou até versão sua. Pintura artesanal nos detalhes."
     },
     {
-      "id": "chaveiro-exemplo",
+      "id": "chaveiro-personalizado",
       "nome": "Chaveiro Personalizado",
       "categoria": "chaveiros",
       "preco": "A partir de R$ 15,00",
-      "imagem": "assets/images/products/chaveiro-exemplo.jpg",
+      "imagem": "assets/images/products/chaveiro-trio.webp",
       "emoji": "🔑",
       "destaque": false,
-      "descricao": "Chaveiro com nome, logo ou símbolo do seu time. Várias cores."
+      "descricao": "Chaveiros 3D com nome, símbolo religioso, polvinho mini, patinha de pet, logo do seu time ou o que mais quiser. Várias cores."
     }
   ]
 }

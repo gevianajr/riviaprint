@@ -117,6 +117,54 @@
   }
 
   /* ============================================================
+   * LIGHTBOX (galeria — clicar amplia em vez de ir pro Instagram)
+   * ============================================================ */
+  function initLightbox() {
+    const items = document.querySelectorAll('.galeria-item');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const closeBtn = document.getElementById('lightboxClose');
+    if (!items.length || !lightbox || !lightboxImg || !closeBtn) return;
+
+    let lastFocused = null;
+
+    const open = (src, alt, trigger) => {
+      lightboxImg.src = src;
+      lightboxImg.alt = alt || '';
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      lastFocused = trigger;
+      // foco na X pra navegar com teclado
+      setTimeout(() => closeBtn.focus(), 0);
+    };
+
+    const close = () => {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+      // limpa src depois da animação pra liberar memória
+      setTimeout(() => { if (!lightbox.classList.contains('open')) lightboxImg.src = ''; }, 300);
+      if (lastFocused) lastFocused.focus();
+    };
+
+    items.forEach(item => {
+      item.addEventListener('click', () => {
+        const img = item.querySelector('img');
+        if (!img) return;
+        open(img.currentSrc || img.src, img.alt, item);
+      });
+    });
+
+    closeBtn.addEventListener('click', close);
+    lightbox.addEventListener('click', (e) => {
+      // clique fora da imagem fecha
+      if (e.target === lightbox) close();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) close();
+    });
+  }
+
+  /* ============================================================
    * BOOT
    * ============================================================ */
   document.addEventListener('DOMContentLoaded', () => {
@@ -125,5 +173,6 @@
     initHeaderScroll();
     initReveal();
     initWppFloat();
+    initLightbox();
   });
 })();

@@ -182,7 +182,7 @@ section {
 }
 
 .logo-img {
-  height: 40px;
+  height: 56px;
   width: auto;
   display: block;
   transition: var(--transition);
@@ -192,7 +192,7 @@ section {
 }
 
 .logo-footer .logo-img {
-  height: 56px;
+  height: 64px;
 }
 
 .nav-list {
@@ -848,4 +848,70 @@ section {
 .wpp-float:hover {
   transform: scale(1.08);
   box-shadow: 0 12px 32px rgba(37, 211, 102, 0.5);
+}
+
+/* ========== LIGHTBOX (galeria) ========== */
+/* O .galeria-item agora é <button>; remove estilos default */
+.galeria-item {
+  background: var(--color-bg);
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: zoom-in;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: var(--space-md);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0s linear 0.25s;
+}
+.lightbox.open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease;
+}
+
+.lightbox-img {
+  max-width: 92vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transform: scale(0.92);
+  transition: transform 0.25s ease;
+}
+.lightbox.open .lightbox-img {
+  transform: scale(1);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  font-size: 28px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
 }
