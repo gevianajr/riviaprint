@@ -1,0 +1,51 @@
+:root {
+  /* === CORES === */
+  --color-bg:           #FFFFFF;
+  --color-bg-soft:      #FAFAFA;
+  --color-text:         #0A0A0A;
+  --color-text-muted:   #666666;
+  --color-border:       #F0F0F0;
+
+  --color-brand:        #3886F7;
+  --color-brand-soft:   #F4F7FF;
+
+  --color-yellow-soft:  #FFFBE5;
+  --color-yellow:       #FFD60A;
+  --color-red-soft:     #FEEBED;
+  --color-red:          #E63946;
+  --color-green-soft:   #E5F8F0;
+  --color-green:        #06D6A0;
+  --color-blue-soft:    #EAF1FF;
+
+  /* === TIPOGRAFIA === */
+  --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+
+  --letter-tight: -1.5px;
+  --letter-normal: 0;
+
+  /* === ESPAÇAMENTO === */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 48px;
+  --space-xl: 96px;
+
+  /* === RAIOS === */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  /* === SOMBRAS === */
+  --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+
+  /* === TRANSIÇÕES === */
+  --transition: all 0.25s ease;
+  --transition-slow: all 0.4s ease;
+
+  /* === LAYOUT === */
+  --container-max: 1200px;
+  --header-height: 72px;
+}
