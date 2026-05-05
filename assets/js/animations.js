@@ -24,6 +24,22 @@
 
   function initAnimations() {
     gsap.registerPlugin(ScrollTrigger);
+
+    // Acessibilidade: desativar animações se o usuário preferir
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      // Mostrar tudo imediatamente, sem animação
+      gsap.set('.hero .section-label, .hero .hero-subtitle, .hero .hero-ctas, .hero-line span', {
+        clearProps: 'all'
+      });
+      gsap.set('#heroProducts .hero-card', { opacity: 1, scale: 1 });
+      // Inicializar apenas Lenis e cursor (não dependem de animação)
+      initLenis();
+      initCursor();
+      initTrustMarquee();
+      return;
+    }
+
     initLenis();
     initCursor();
     initAurora();
