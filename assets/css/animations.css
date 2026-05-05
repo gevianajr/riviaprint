@@ -324,3 +324,36 @@ body.cursor-hover #cursorGlow {
     margin-bottom: var(--space-sm);
   }
 }
+
+/* ---- CATÁLOGO: SPOTLIGHT + GRID REVEAL ---- */
+.produto-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.produto-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    200px at var(--card-mx, 50%) var(--card-my, 50%),
+    rgba(56, 134, 247, 0.10),
+    transparent 75%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.produto-card:hover::before { opacity: 1; }
+
+/* Estado inicial para GSAP scroll reveal */
+.produtos-grid .produto-card {
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+}
+
+/* Tab transition */
+.catalogo-tabs.is-transitioning .tab { pointer-events: none; }

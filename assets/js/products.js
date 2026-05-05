@@ -68,9 +68,31 @@
    */
   function filterProducts(categoriaId) {
     const cards = document.querySelectorAll('#produtosGrid .produto-card');
-    cards.forEach(card => {
-      const matches = categoriaId === 'todos' || card.dataset.categoria === categoriaId;
-      card.classList.toggle('hidden', !matches);
+
+    if (typeof gsap === 'undefined') {
+      // Fallback sem animação
+      cards.forEach(card => {
+        const matches = categoriaId === 'todos' || card.dataset.categoria === categoriaId;
+        card.classList.toggle('hidden', !matches);
+      });
+      return;
+    }
+
+    gsap.to(Array.from(cards).filter(c => !c.classList.contains('hidden')), {
+      opacity: 0, y: 8, duration: 0.18, ease: 'power2.in',
+      onComplete: () => {
+        cards.forEach(card => {
+          const matches = categoriaId === 'todos' || card.dataset.categoria === categoriaId;
+          card.classList.toggle('hidden', !matches);
+          card.style.opacity = '';
+          card.style.transform = '';
+        });
+        const visible = document.querySelectorAll('#produtosGrid .produto-card:not(.hidden)');
+        gsap.fromTo(visible,
+          { opacity: 0, y: 8 },
+          { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' }
+        );
+      }
     });
   }
 

@@ -35,6 +35,7 @@
     initTrustMarquee();
     initSectionReveals();
     initPassosPin();
+    initCatalogo();
   }
 
   function initLenis() {
@@ -362,6 +363,36 @@
         tl.to(item, { opacity: 0, y: -30, duration: 0.3 }, '+=0.5');
       }
     });
+  }
+
+  function initCatalogo() {
+    // Spotlight nos cards
+    const observer = new MutationObserver(() => {
+      document.querySelectorAll('.produto-card').forEach(card => {
+        if (card.dataset.spotlightInit) return;
+        card.dataset.spotlightInit = '1';
+
+        card.addEventListener('mousemove', (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--card-mx', (e.clientX - r.left) + 'px');
+          card.style.setProperty('--card-my', (e.clientY - r.top)  + 'px');
+        });
+      });
+
+      // Grid reveal (dispara 1x quando cards aparecem)
+      const cards = document.querySelectorAll('.produtos-grid .produto-card');
+      if (cards.length > 0 && !document.querySelector('.produtos-grid').dataset.revealDone) {
+        document.querySelector('.produtos-grid').dataset.revealDone = '1';
+        gsap.to(cards, {
+          opacity: 1, y: 0, scale: 1,
+          duration: 0.55, stagger: 0.08, ease: 'power3.out',
+          scrollTrigger: { trigger: '.produtos-grid', start: 'top 85%', once: true }
+        });
+      }
+    });
+
+    const grid = document.getElementById('produtosGrid');
+    if (grid) observer.observe(grid, { childList: true });
   }
 
   function initTrustMarquee() {
