@@ -26,6 +26,7 @@
     gsap.registerPlugin(ScrollTrigger);
     initLenis();
     initCursor();
+    initAurora();
   }
 
   function initLenis() {
@@ -86,5 +87,16 @@
       el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
       el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
     });
+  }
+
+  function initAurora() {
+    const b1 = document.querySelector('.hero-blob-1');
+    const b2 = document.querySelector('.hero-blob-2');
+    const b3 = document.querySelector('.hero-blob-3');
+    if (!b1 || !b2 || !b3) return;
+
+    gsap.to(b1, { x: 55, y: -38, scale: 1.18, duration: 8,   yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    gsap.to(b2, { x: -38, y: 32, scale: 0.88, duration: 9.5, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    gsap.to(b3, { x: 28, y: 42,  scale: 1.12, duration: 7,   yoyo: true, repeat: -1, ease: 'sine.inOut' });
   }
 })();
