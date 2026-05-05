@@ -2,11 +2,16 @@
   'use strict';
 
   // Aguarda GSAP, ScrollTrigger e Lenis estarem disponíveis
+  var waitStart = Date.now();
   function waitForLibs(cb) {
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof Lenis !== 'undefined') {
       cb();
+    } else if (Date.now() - waitStart > 8000) {
+      console.error('[animations] CDN timeout — libs not loaded after 8s', {
+        gsap: typeof gsap, ScrollTrigger: typeof ScrollTrigger, Lenis: typeof Lenis
+      });
     } else {
-      requestAnimationFrame(() => waitForLibs(cb));
+      requestAnimationFrame(function() { waitForLibs(cb); });
     }
   }
 
