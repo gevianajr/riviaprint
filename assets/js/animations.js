@@ -151,14 +151,14 @@
   let heroCardsInitialized = false;
 
   function initHeroFloat() {
-    if (heroCardsInitialized) return;
-    heroCardsInitialized = true;
     initHeroCards();
   }
 
   function initHeroCards() {
+    if (heroCardsInitialized) return;
     const cards = Array.from(document.querySelectorAll('#heroProducts .hero-card'));
     if (cards.length === 0) return;
+    heroCardsInitialized = true;
 
     // Parâmetros de flutuação por card (máx 4 cards)
     const floatParams = [
@@ -210,8 +210,6 @@
 
   function initHeroCardsListener() {
     document.addEventListener('riviaProductsReady', function () {
-      if (heroCardsInitialized) return;
-      heroCardsInitialized = true;
       initHeroCards();
     }, { once: true });
   }
