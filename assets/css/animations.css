@@ -102,3 +102,35 @@ body.cursor-hover #cursorGlow {
 
 /* hero-grid deve ficar acima dos blobs e noise */
 .hero-grid { position: relative; z-index: 2; }
+
+/* ---- HERO LINE CLIP-PATH REVEAL ---- */
+.hero-line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero-line span {
+  display: block;
+  /* Estado inicial definido por GSAP no initHeroTimeline */
+}
+
+/* Gradiente animado no texto da marca */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+.hero .text-brand {
+  background: linear-gradient(90deg, #3886F7, #a855f7, #3886F7);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3.5s ease infinite;
+}
+
+/* Ocultar seção-label e hero-subtitle até GSAP animar */
+.hero .section-label,
+.hero .hero-subtitle,
+.hero .hero-ctas {
+  opacity: 0;
+}

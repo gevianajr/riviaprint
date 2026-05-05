@@ -27,6 +27,7 @@
     initLenis();
     initCursor();
     initAurora();
+    initHeroTimeline();
   }
 
   function initLenis() {
@@ -99,4 +100,29 @@
     gsap.to(b2, { x: -38, y: 32, scale: 0.88, duration: 9.5, yoyo: true, repeat: -1, ease: 'sine.inOut' });
     gsap.to(b3, { x: 28, y: 42,  scale: 1.12, duration: 7,   yoyo: true, repeat: -1, ease: 'sine.inOut' });
   }
+
+  function initHeroTimeline() {
+    // Estado inicial via GSAP
+    gsap.set('.hero-line span', { y: 56 });
+    gsap.set('.hero .section-label', { opacity: 0, y: 12 });
+    gsap.set('.hero .hero-subtitle', { opacity: 0, y: 18 });
+    gsap.set('.hero .hero-ctas',     { opacity: 0, y: 18 });
+    // Hero cards são animados em Task 8 após riviaProductsReady
+
+    const tl = gsap.timeline({ delay: 0.15, onComplete: initHeroFloat });
+
+    tl.to('.hero .section-label',    { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+      .to('.hero-line',              { opacity: 1, duration: 0 }, '-=0.1')
+      .to('.hero-line span', {
+          y: 0,
+          duration: 0.75,
+          stagger: 0.18,
+          ease: 'power4.out'
+        }, '-=0.1')
+      .to('.hero .hero-subtitle',    { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, '-=0.4')
+      .to('.hero .hero-ctas',        { opacity: 1, y: 0, duration: 0.5,  ease: 'power2.out' }, '-=0.35');
+  }
+
+  // Placeholder — substituído na Task 8
+  function initHeroFloat() {}
 })();
