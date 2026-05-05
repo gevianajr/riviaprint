@@ -7,11 +7,14 @@
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof Lenis !== 'undefined') {
       cb();
     } else if (Date.now() - waitStart > 8000) {
-      console.error('[animations] CDN timeout — libs not loaded after 8s', {
-        gsap: typeof gsap, ScrollTrigger: typeof ScrollTrigger, Lenis: typeof Lenis
-      });
+      var missing = [];
+      if (typeof gsap === 'undefined') missing.push('gsap');
+      if (typeof ScrollTrigger === 'undefined') missing.push('ScrollTrigger');
+      if (typeof Lenis === 'undefined') missing.push('Lenis');
+      console.error('[animations] CDN timeout after 8s. Missing: ' + missing.join(', '));
+      return;
     } else {
-      requestAnimationFrame(function() { waitForLibs(cb); });
+      requestAnimationFrame(function () { waitForLibs(cb); });
     }
   }
 
