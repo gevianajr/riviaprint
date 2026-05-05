@@ -36,6 +36,7 @@
     initSectionReveals();
     initPassosPin();
     initCatalogo();
+    initGaleria();
   }
 
   function initLenis() {
@@ -419,5 +420,53 @@
       strip.addEventListener('mouseenter', () => marquee.pause());
       strip.addEventListener('mouseleave', () => marquee.play());
     }
+  }
+
+  function initGaleria() {
+    const items = gsap.utils.toArray('.galeria-item');
+    if (items.length === 0) return;
+
+    // Stagger com direção alternada (ímpares da esquerda, pares da direita)
+    items.forEach((item, i) => {
+      const fromX = i % 2 === 0 ? -30 : 30;
+      gsap.from(item, {
+        opacity: 0, x: fromX, scale: 0.95,
+        duration: 0.65, ease: 'power3.out',
+        scrollTrigger: {
+          trigger: item,
+          start: 'top 88%',
+          once: true
+        }
+      });
+
+      // Parallax leve na imagem dentro do item
+      const img = item.querySelector('img');
+      if (img) {
+        gsap.to(img, {
+          y: -18,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1.5
+          }
+        });
+      }
+    });
+
+    // Header da galeria
+    gsap.from('.galeria-header .section-label', {
+      opacity: 0, y: 20, duration: 0.5, ease: 'power2.out',
+      scrollTrigger: { trigger: '.galeria-header', start: 'top 80%' }
+    });
+    gsap.from('.galeria-header .section-title, .galeria-header .section-subtitle', {
+      opacity: 0, y: 30, duration: 0.6, stagger: 0.15, ease: 'power3.out',
+      scrollTrigger: { trigger: '.galeria-header', start: 'top 75%' }
+    });
+    gsap.from('.galeria-footer', {
+      opacity: 0, y: 20, duration: 0.5, ease: 'power2.out',
+      scrollTrigger: { trigger: '.galeria-footer', start: 'top 90%' }
+    });
   }
 })();
