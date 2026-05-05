@@ -34,6 +34,7 @@
     initTrustCounter();
     initTrustMarquee();
     initSectionReveals();
+    initPassosPin();
   }
 
   function initLenis() {
@@ -312,6 +313,54 @@
       opacity: 0, y: 20,
       duration: 0.5, stagger: 0.1, ease: 'power2.out',
       scrollTrigger: { trigger: '.footer-inner', start: 'top 95%' }
+    });
+  }
+
+  function initPassosPin() {
+    // Desativar pin em mobile
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      gsap.from('.passo-item', {
+        opacity: 0, y: 30,
+        duration: 0.6, stagger: 0.15, ease: 'power3.out',
+        scrollTrigger: { trigger: '.passos-stage', start: 'top 80%' }
+      });
+      return;
+    }
+
+    const itens    = gsap.utils.toArray('.passo-item');
+    const bgNum    = document.getElementById('passoBgNum');
+    const progress = document.getElementById('comoProgressFill');
+
+    // Estado inicial
+    gsap.set(itens, { opacity: 0, y: 30 });
+    gsap.set(itens[0], { opacity: 1, y: 0 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#como',
+        pin: true,
+        start: 'top top',
+        end: '+=250%',
+        scrub: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          if (progress) progress.style.width = (self.progress * 100) + '%';
+          if (bgNum) {
+            const step = Math.min(Math.floor(self.progress * itens.length), itens.length - 1);
+            bgNum.textContent = step + 1;
+          }
+        }
+      }
+    });
+
+    // Sequência: cada passo entra e sai, exceto o último que fica
+    itens.forEach((item, i) => {
+      if (i > 0) {
+        tl.fromTo(item, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4 });
+      }
+      if (i < itens.length - 1) {
+        tl.to(item, { opacity: 0, y: -30, duration: 0.3 }, '+=0.5');
+      }
     });
   }
 

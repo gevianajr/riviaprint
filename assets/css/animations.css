@@ -245,3 +245,82 @@ body.cursor-hover #cursorGlow {
   background: var(--color-border);
   flex-shrink: 0;
 }
+
+/* ---- 4 PASSOS PINADO ---- */
+.como-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-border);
+  z-index: 10;
+}
+
+.como-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #3886F7, #a855f7);
+  transition: width 0.05s linear;
+}
+
+.como { position: relative; overflow: hidden; }
+
+.passos-stage {
+  position: relative;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-lg);
+}
+
+.passo-bg-num {
+  position: absolute;
+  font-size: clamp(120px, 18vw, 200px);
+  font-weight: 900;
+  color: var(--color-brand);
+  opacity: 0.05;
+  letter-spacing: -8px;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+  line-height: 1;
+}
+
+.passos-list {
+  list-style: none;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+}
+
+.passo-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  opacity: 0;
+  background: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+/* Primeiro passo visível por padrão antes do GSAP */
+.passo-item[data-passo="0"] { opacity: 1; }
+
+/* Mobile: desativar pin, mostrar como grid */
+@media (max-width: 767px) {
+  .passos-stage { min-height: auto; display: block; }
+  .passos-list  { position: static; max-width: 100%; }
+  .passo-item   {
+    position: static;
+    transform: none;
+    opacity: 1;
+    margin-bottom: var(--space-sm);
+  }
+}
