@@ -109,20 +109,28 @@
   <main>
     <!-- HERO -->
     <section id="home" class="hero">
+    <!-- Aurora background (animado por GSAP) -->
+    <div class="hero-blob hero-blob-1" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-2" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-3" aria-hidden="true"></div>
       <div class="container hero-grid">
         <div class="hero-content reveal">
           <span class="section-label">Impressão 3D sob medida</span>
           <h1>
-            Suas ideias,<br>
-            <span class="text-brand">impressas em 3D</span><br>
-            com capricho.
+            <span class="hero-line"><span>Suas ideias,</span></span>
+            <span class="hero-line"><span class="text-brand">impressas em 3D</span></span>
+            <span class="hero-line"><span>com capricho.</span></span>
           </h1>
           <p class="hero-subtitle">
             Da peça personalizada ao colecionável. Articulados, decorativos, presentes únicos — feitos com qualidade, cor e prazo que você confia.
           </p>
-          <div class="hero-ctas">
-            <a href="#produtos" class="btn btn-primary">Ver catálogo</a>
-            <a href="https://www.instagram.com/riviaprint/" target="_blank" rel="noopener" class="btn btn-secondary">Falar no Instagram</a>
+          <div class="hero-ctas" id="heroCtas">
+            <span class="btn-wrap">
+              <a href="#produtos" class="btn btn-primary btn-beam">Ver catálogo</a>
+            </span>
+            <span class="btn-wrap">
+              <a href="https://www.instagram.com/riviaprint/" target="_blank" rel="noopener" class="btn btn-secondary">Falar no Instagram</a>
+            </span>
           </div>
         </div>
 
