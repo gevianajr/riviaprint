@@ -24,6 +24,29 @@
 
   function initAnimations() {
     gsap.registerPlugin(ScrollTrigger);
-    // tarefas inicializadas nas próximas tasks
+    initLenis();
+  }
+
+  function initLenis() {
+    const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+
+    // Integração Lenis v1 + GSAP: usar o ticker do GSAP
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    // Notificar ScrollTrigger a cada evento de scroll do Lenis
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Smooth scroll nos links âncora (substitui initSmoothScroll)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const id = anchor.getAttribute('href');
+        if (id === '#' || id.length < 2) return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        lenis.scrollTo(target, { offset: -(document.getElementById('header')?.offsetHeight || 72) });
+      });
+    });
   }
 })();
