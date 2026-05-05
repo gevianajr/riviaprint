@@ -47,8 +47,8 @@
     initHeroCardsListener();
     initMouseParallax();
     initMagneticButtons();
-    initTrustCounter();
     initTrustMarquee();
+    initTrustCounter();
     initSectionReveals();
     initPassosPin();
     initCatalogo();
