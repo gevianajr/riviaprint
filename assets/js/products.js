@@ -68,9 +68,31 @@
    */
   function filterProducts(categoriaId) {
     const cards = document.querySelectorAll('#produtosGrid .produto-card');
-    cards.forEach(card => {
-      const matches = categoriaId === 'todos' || card.dataset.categoria === categoriaId;
-      card.classList.toggle('hidden', !matches);
+
+    if (typeof gsap === 'undefined') {
+      // Fallback sem animação
+      cards.forEach(card => {
+        const matches = categoriaId === 'todos' || card.dataset.categoria === categoriaId;
+        card.classList.toggle('hidden', !matches);
+      });
+      return;
+    }
+
+    gsap.to(Array.from(cards).filter(c => !c.classList.contains('hidden')), {
+      opacity: 0, y: 8, duration: 0.18, ease: 'power2.in',
+      onComplete: () => {
+        cards.forEach(card => {
+          const matches = categoriaId === 'todos' || card.dataset.categoria === categoriaId;
+          card.classList.toggle('hidden', !matches);
+          card.style.opacity = '';
+          card.style.transform = '';
+        });
+        const visible = document.querySelectorAll('#produtosGrid .produto-card:not(.hidden)');
+        gsap.fromTo(visible,
+          { opacity: 0, y: 8 },
+          { opacity: 1, y: 0, duration: 0.3, stagger: 0.05, ease: 'power2.out' }
+        );
+      }
     });
   }
 
@@ -151,6 +173,8 @@
       renderTabs(data.categorias);
       renderProducts(data.produtos, corPorCategoria);
       renderHeroProducts(data.produtos, corPorCategoria);
+      // Notifica animations.js que os hero cards foram renderizados
+      document.dispatchEvent(new CustomEvent('riviaProductsReady'));
     } catch (err) {
       console.error('[products.js] Erro ao carregar produtos:', err);
       const loading = document.getElementById('catalogoLoading');

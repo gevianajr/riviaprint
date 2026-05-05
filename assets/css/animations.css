@@ -1,0 +1,359 @@
+/* animations.css — gerado pelo upgrade visual Full Overhaul */
+
+/* Neutraliza o sistema .reveal do CSS antigo — GSAP assume o controle */
+.reveal,
+.reveal.visible {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+/* ---- CURSOR CUSTOMIZADO ---- */
+@media (pointer: fine) {
+  html, body { cursor: none; }
+  a, button, [role="button"], .hcard, .galeria-item, .tab { cursor: none; }
+}
+
+#cursorDot {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: #3886F7;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  will-change: left, top;
+}
+
+#cursorGlow {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(56, 134, 247, 0.35);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+  will-change: left, top;
+}
+
+body.cursor-hover #cursorDot {
+  width: 14px;
+  height: 14px;
+  background: #a855f7;
+}
+
+body.cursor-hover #cursorGlow {
+  width: 52px;
+  height: 52px;
+  border-color: rgba(168, 85, 247, 0.4);
+}
+
+/* ---- AURORA BLOBS ---- */
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+}
+
+.hero-blob-1 {
+  width: 480px;
+  height: 480px;
+  background: rgba(56, 134, 247, 0.13);
+  top: -140px;
+  left: -80px;
+}
+
+.hero-blob-2 {
+  width: 360px;
+  height: 360px;
+  background: rgba(168, 85, 247, 0.10);
+  bottom: -80px;
+  right: 60px;
+}
+
+.hero-blob-3 {
+  width: 280px;
+  height: 280px;
+  background: rgba(34, 197, 94, 0.08);
+  top: 60px;
+  right: 260px;
+}
+
+/* Hero precisa de overflow:hidden para não vazar blobs */
+.hero { overflow: hidden; }
+
+/* Noise texture sutil */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.45;
+}
+
+/* hero-grid deve ficar acima dos blobs e noise */
+.hero-grid { position: relative; z-index: 2; }
+
+/* ---- HERO LINE CLIP-PATH REVEAL ---- */
+.hero-line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero-line span {
+  display: block;
+  /* Estado inicial definido por GSAP no initHeroTimeline */
+}
+
+/* Gradiente animado no texto da marca */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+.hero .text-brand {
+  background: linear-gradient(90deg, #3886F7, #a855f7, #3886F7);
+  background-size: 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3.5s ease infinite;
+}
+
+/* Ocultar seção-label e hero-subtitle até GSAP animar */
+.hero .section-label,
+.hero .hero-subtitle,
+.hero .hero-ctas {
+  opacity: 0;
+}
+
+/* ---- HERO CARDS — spotlight + tilt ---- */
+.hero-card {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Override do hover do style.css — GSAP gerencia */
+.hero-card:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Spotlight: círculo de luz que segue o cursor */
+.hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    200px at var(--card-mx, 50%) var(--card-my, 50%),
+    rgba(255, 255, 255, 0.55),
+    transparent 80%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-card:hover::before { opacity: 1; }
+
+/* ---- BOTÕES MAGNÉTICOS ---- */
+.btn-wrap {
+  display: inline-block;
+  padding: 18px;       /* área de captura magnética */
+  margin: -18px;       /* compensa o padding para não afetar o layout */
+  vertical-align: middle;
+}
+
+/* ---- BORDER BEAM (botão primário do hero) ---- */
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes beamRotate {
+  to { --beam-angle: 360deg; }
+}
+
+.btn-beam {
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.btn-beam::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 70%,
+    rgba(168, 85, 247, 0.85) 85%,
+    rgba(56, 134, 247, 1) 90%,
+    rgba(168, 85, 247, 0.85) 95%,
+    transparent
+  );
+  animation: beamRotate 2.5s linear infinite;
+  z-index: -1;
+  border-radius: var(--radius-pill, 999px);
+}
+
+/* ---- TRUST STRIP MARQUEE ---- */
+.trust-strip {
+  overflow: hidden;
+}
+
+/* Neutraliza o .trust-strip-inner do style.css */
+.trust-strip-inner { display: none !important; }
+
+.trust-marquee-wrapper {
+  display: flex;
+  width: max-content;
+}
+
+.trust-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 14px 20px;
+  flex-shrink: 0;
+}
+
+.trust-item {
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.trust-sep {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-border);
+  flex-shrink: 0;
+}
+
+/* ---- 4 PASSOS PINADO ---- */
+.como-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-border);
+  z-index: 10;
+}
+
+.como-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #3886F7, #a855f7);
+  transition: width 0.05s linear;
+}
+
+.como { position: relative; overflow: hidden; }
+
+.passos-stage {
+  position: relative;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--space-lg);
+}
+
+.passo-bg-num {
+  position: absolute;
+  font-size: clamp(120px, 18vw, 200px);
+  font-weight: 900;
+  color: var(--color-brand);
+  opacity: 0.05;
+  letter-spacing: -8px;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+  line-height: 1;
+}
+
+.passos-list {
+  list-style: none;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+}
+
+.passo-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  opacity: 0;
+  background: var(--color-bg-soft);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+/* Primeiro passo visível por padrão antes do GSAP */
+.passo-item[data-passo="0"] { opacity: 1; }
+
+/* Mobile: desativar pin, mostrar como grid */
+@media (max-width: 767px) {
+  .passos-stage { min-height: auto; display: block; }
+  .passos-list  { position: static; max-width: 100%; }
+  .passo-item   {
+    position: static;
+    transform: none;
+    opacity: 1;
+    margin-bottom: var(--space-sm);
+  }
+}
+
+/* ---- CATÁLOGO: SPOTLIGHT + GRID REVEAL ---- */
+.produto-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.produto-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    200px at var(--card-mx, 50%) var(--card-my, 50%),
+    rgba(56, 134, 247, 0.10),
+    transparent 75%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.produto-card:hover::before { opacity: 1; }
+
+/* Estado inicial para GSAP scroll reveal */
+.produtos-grid .produto-card {
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+}
+
+/* Tab transition */
+.catalogo-tabs.is-transitioning .tab { pointer-events: none; }

@@ -35,24 +35,6 @@
   }
 
   /* ============================================================
-   * SCROLL SUAVE PARA ÂNCORAS
-   * ============================================================ */
-  function initSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', (e) => {
-        const id = anchor.getAttribute('href');
-        if (id === '#' || id.length < 2) return;
-        const target = document.querySelector(id);
-        if (!target) return;
-        e.preventDefault();
-        const headerHeight = document.getElementById('header')?.offsetHeight || 72;
-        const top = target.getBoundingClientRect().top + window.pageYOffset - headerHeight + 1;
-        window.scrollTo({ top, behavior: 'smooth' });
-      });
-    });
-  }
-
-  /* ============================================================
    * HEADER COM SOMBRA AO ROLAR
    * ============================================================ */
   function initHeaderScroll() {
@@ -67,28 +49,6 @@
     window.addEventListener('scroll', () => {
       requestAnimationFrame(update);
     }, { passive: true });
-  }
-
-  /* ============================================================
-   * REVEAL ON SCROLL (IntersectionObserver)
-   * ============================================================ */
-  function initReveal() {
-    const reveals = document.querySelectorAll('.reveal');
-    if (!reveals.length || !('IntersectionObserver' in window)) {
-      reveals.forEach(el => el.classList.add('visible'));
-      return;
-    }
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-
-    reveals.forEach(el => observer.observe(el));
   }
 
   /* ============================================================
@@ -171,9 +131,7 @@
    * ============================================================ */
   document.addEventListener('DOMContentLoaded', () => {
     initMenuMobile();
-    initSmoothScroll();
     initHeaderScroll();
-    initReveal();
     initWppFloat();
     initLightbox();
   });

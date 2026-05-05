@@ -1,0 +1,486 @@
+(function () {
+  'use strict';
+
+  // Aguarda GSAP, ScrollTrigger e Lenis estarem disponíveis
+  var waitStart = Date.now();
+  function waitForLibs(cb) {
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && typeof Lenis !== 'undefined') {
+      cb();
+    } else if (Date.now() - waitStart > 8000) {
+      var missing = [];
+      if (typeof gsap === 'undefined') missing.push('gsap');
+      if (typeof ScrollTrigger === 'undefined') missing.push('ScrollTrigger');
+      if (typeof Lenis === 'undefined') missing.push('Lenis');
+      console.error('[animations] CDN timeout after 8s. Missing: ' + missing.join(', '));
+      return;
+    } else {
+      requestAnimationFrame(function () { waitForLibs(cb); });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    waitForLibs(initAnimations);
+  });
+
+  function initAnimations() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Acessibilidade: desativar animações se o usuário preferir
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) {
+      // Mostrar tudo imediatamente, sem animação
+      gsap.set('.hero .section-label, .hero .hero-subtitle, .hero .hero-ctas, .hero-line span', {
+        clearProps: 'all'
+      });
+      gsap.set('#heroProducts .hero-card', { opacity: 1, scale: 1 });
+      // Inicializar apenas Lenis e cursor (não dependem de animação)
+      initLenis();
+      initCursor();
+      initTrustMarquee();
+      return;
+    }
+
+    initLenis();
+    initCursor();
+    initAurora();
+    initHeroTimeline();
+    initHeroCardsListener();
+    initMouseParallax();
+    initMagneticButtons();
+    initTrustMarquee();
+    initTrustCounter();
+    initSectionReveals();
+    initPassosPin();
+    initCatalogo();
+    initGaleria();
+  }
+
+  function initLenis() {
+    const lenis = new Lenis({ lerp: 0.08, smoothWheel: true });
+
+    // Integração Lenis v1 + GSAP: usar o ticker do GSAP
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    // Notificar ScrollTrigger a cada evento de scroll do Lenis
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Smooth scroll nos links âncora (substitui initSmoothScroll)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const id = anchor.getAttribute('href');
+        if (id === '#' || id.length < 2) return;
+        const target = document.querySelector(id);
+        if (!target) return;
+        e.preventDefault();
+        lenis.scrollTo(target, { offset: -(document.getElementById('header')?.offsetHeight || 72) });
+      });
+    });
+  }
+
+  function initCursor() {
+    // Ativar apenas em dispositivos com pointer preciso (desktop)
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    const dot  = document.getElementById('cursorDot');
+    const glow = document.getElementById('cursorGlow');
+    if (!dot || !glow) return;
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let glowX  = mouseX;
+    let glowY  = mouseY;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top  = mouseY + 'px';
+    });
+
+    // Glow segue com lag via rAF
+    (function loopGlow() {
+      glowX += (mouseX - glowX) * 0.12;
+      glowY += (mouseY - glowY) * 0.12;
+      glow.style.left = glowX + 'px';
+      glow.style.top  = glowY + 'px';
+      requestAnimationFrame(loopGlow);
+    })();
+
+    // Hover state em elementos interativos
+    const interactiveSelector = 'a, button, [role="button"], .tab, .galeria-item, .produto-card, .contato-card';
+    document.querySelectorAll(interactiveSelector).forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    });
+  }
+
+  function initAurora() {
+    const b1 = document.querySelector('.hero-blob-1');
+    const b2 = document.querySelector('.hero-blob-2');
+    const b3 = document.querySelector('.hero-blob-3');
+    if (!b1 || !b2 || !b3) return;
+
+    gsap.to(b1, { x: 55, y: -38, scale: 1.18, duration: 8,   yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    gsap.to(b2, { x: -38, y: 32, scale: 0.88, duration: 9.5, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    gsap.to(b3, { x: 28, y: 42,  scale: 1.12, duration: 7,   yoyo: true, repeat: -1, ease: 'sine.inOut' });
+  }
+
+  function initHeroTimeline() {
+    // Estado inicial via GSAP
+    gsap.set('.hero-line span', { y: 56 });
+    gsap.set('.hero .section-label', { opacity: 0, y: 12 });
+    gsap.set('.hero .hero-subtitle', { opacity: 0, y: 18 });
+    gsap.set('.hero .hero-ctas',     { opacity: 0, y: 18 });
+    // Hero cards são animados em Task 8 após riviaProductsReady
+
+    const tl = gsap.timeline({ delay: 0.15, onComplete: initHeroFloat });
+
+    tl.to('.hero .section-label',    { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' })
+      .to('.hero-line',              { opacity: 1, duration: 0 }, '-=0.1')
+      .to('.hero-line span', {
+          y: 0,
+          duration: 0.75,
+          stagger: 0.18,
+          ease: 'power4.out'
+        }, '-=0.1')
+      .to('.hero .hero-subtitle',    { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, '-=0.4')
+      .to('.hero .hero-ctas',        { opacity: 1, y: 0, duration: 0.5,  ease: 'power2.out' }, '-=0.35');
+  }
+
+  let heroCardsInitialized = false;
+
+  function initHeroFloat() {
+    initHeroCards();
+  }
+
+  function initHeroCards() {
+    if (heroCardsInitialized) return;
+    const cards = Array.from(document.querySelectorAll('#heroProducts .hero-card'));
+    if (cards.length === 0) return;
+    heroCardsInitialized = true;
+
+    // Parâmetros de flutuação por card (máx 4 cards)
+    const floatParams = [
+      { y: -14, rotation: -2,   duration: 3.0, delay: 0   },
+      { y:  12, rotation:  1.5, duration: 3.6, delay: 0.5 },
+      { y: -10, rotation: -1.5, duration: 3.3, delay: 1.1 },
+      { y:  14, rotation:  2,   duration: 3.9, delay: 0.3 },
+    ];
+
+    // Entrada dos cards com bounce
+    gsap.fromTo(cards,
+      { opacity: 0, scale: 0.75 },
+      { opacity: 1, scale: 1, duration: 0.7, stagger: 0.12, ease: 'back.out(1.4)' }
+    );
+
+    // Float loop
+    cards.forEach((card, i) => {
+      const p = floatParams[i % floatParams.length];
+      gsap.to(card, {
+        y: p.y, rotation: p.rotation,
+        duration: p.duration, delay: p.delay,
+        yoyo: true, repeat: -1, ease: 'sine.inOut'
+      });
+    });
+
+    // Tilt 3D + spotlight
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        gsap.to(card, {
+          rotateY: x * 22, rotateX: -y * 22, scale: 1.05,
+          duration: 0.25, ease: 'power2.out',
+          transformPerspective: 700, overwrite: 'auto'
+        });
+        card.style.setProperty('--card-mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--card-my', (e.clientY - r.top)  + 'px');
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotateY: 0, rotateX: 0, scale: 1,
+          duration: 0.7, ease: 'elastic.out(1,0.5)', overwrite: 'auto'
+        });
+      });
+    });
+  }
+
+  function initHeroCardsListener() {
+    document.addEventListener('riviaProductsReady', function () {
+      initHeroCards();
+    }, { once: true });
+  }
+
+  function initMouseParallax() {
+    const heroBody = document.querySelector('.hero-grid');
+    const heroLeft  = document.querySelector('.hero-content');
+    const heroRight = document.querySelector('.hero-products');
+    const blob1     = document.querySelector('.hero-blob-1');
+    if (!heroBody || !heroLeft || !heroRight) return;
+
+    heroBody.addEventListener('mousemove', (e) => {
+      const r = heroBody.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+
+      gsap.to(heroLeft,  { x: x * -16, y: y * -10, duration: 0.8, ease: 'power2.out', overwrite: 'auto' });
+      gsap.to(heroRight, { x: x *  20, y: y *  14, duration: 0.8, ease: 'power2.out', overwrite: 'auto' });
+      if (blob1) gsap.to(blob1, { x: x * 45 + 55, y: y * 32 - 38, duration: 1.2, ease: 'power2.out', overwrite: 'auto' });
+    });
+
+    heroBody.addEventListener('mouseleave', () => {
+      gsap.to([heroLeft, heroRight], { x: 0, y: 0, duration: 1.2, ease: 'power3.out' });
+    });
+  }
+
+  function initMagneticButtons() {
+    document.querySelectorAll('.btn-wrap').forEach(wrap => {
+      const btn = wrap.querySelector('.btn');
+      if (!btn) return;
+
+      wrap.addEventListener('mousemove', (e) => {
+        const r = wrap.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width  / 2) * 0.38;
+        const y = (e.clientY - r.top  - r.height / 2) * 0.38;
+        gsap.to(btn, { x, y, duration: 0.3, ease: 'power2.out' });
+      });
+
+      wrap.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,0.4)' });
+      });
+    });
+  }
+
+  function initTrustCounter() {
+    const el = document.getElementById('trustCounter');
+    if (!el) return;
+
+    let triggered = false;
+
+    ScrollTrigger.create({
+      trigger: '.trust-strip',
+      start: 'top 95%',
+      onEnter: () => {
+        if (triggered) return;
+        triggered = true;
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: 500,
+          duration: 2,
+          ease: 'power2.out',
+          onUpdate: function () {
+            el.textContent = '+' + Math.round(obj.val);
+          }
+        });
+      }
+    });
+  }
+
+  function initSectionReveals() {
+    // --- Como encomendar: header ---
+    gsap.from('.como-header .section-label', {
+      opacity: 0, y: 20, duration: 0.5, ease: 'power2.out',
+      scrollTrigger: { trigger: '.como-header', start: 'top 80%' }
+    });
+    gsap.from('.como-header .section-title', {
+      opacity: 0, y: 30, duration: 0.6, ease: 'power3.out',
+      scrollTrigger: { trigger: '.como-header', start: 'top 75%' }
+    });
+
+    // --- Sobre: título ---
+    gsap.from('.sobre-header .section-label', {
+      opacity: 0, y: 20, duration: 0.5, ease: 'power2.out',
+      scrollTrigger: { trigger: '.sobre-header', start: 'top 80%' }
+    });
+    gsap.from('.sobre-header .section-title, .sobre-header .section-subtitle', {
+      opacity: 0, y: 30, duration: 0.65, stagger: 0.15, ease: 'power3.out',
+      scrollTrigger: { trigger: '.sobre-header', start: 'top 75%' }
+    });
+
+    // --- Sobre: feature cards ---
+    gsap.from('.feature', {
+      opacity: 0, y: 40, scale: 0.96,
+      duration: 0.6, stagger: 0.12, ease: 'power3.out',
+      scrollTrigger: { trigger: '.features', start: 'top 80%' }
+    });
+
+    // --- Catálogo: header ---
+    gsap.from('.catalogo-header .section-label', {
+      opacity: 0, y: 20, duration: 0.5, ease: 'power2.out',
+      scrollTrigger: { trigger: '.catalogo-header', start: 'top 80%' }
+    });
+    gsap.from('.catalogo-header .section-title, .catalogo-header .section-subtitle', {
+      opacity: 0, y: 30, duration: 0.6, stagger: 0.15, ease: 'power3.out',
+      scrollTrigger: { trigger: '.catalogo-header', start: 'top 75%' }
+    });
+
+    // --- Contato: cards com stagger diagonal ---
+    gsap.from('.contato-card', {
+      opacity: 0, y: 30, x: -10,
+      duration: 0.6, stagger: 0.15, ease: 'back.out(1.3)',
+      scrollTrigger: { trigger: '.contato-grid', start: 'top 85%' }
+    });
+
+    // --- Footer: colunas ---
+    gsap.from('.footer-brand, .footer-links, .footer-contato, .footer-redes', {
+      opacity: 0, y: 20,
+      duration: 0.5, stagger: 0.1, ease: 'power2.out',
+      scrollTrigger: { trigger: '.footer-inner', start: 'top 95%' }
+    });
+  }
+
+  function initPassosPin() {
+    // Desativar pin em mobile
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      gsap.from('.passo-item', {
+        opacity: 0, y: 30,
+        duration: 0.6, stagger: 0.15, ease: 'power3.out',
+        scrollTrigger: { trigger: '.passos-stage', start: 'top 80%' }
+      });
+      return;
+    }
+
+    const itens    = gsap.utils.toArray('.passo-item');
+    const bgNum    = document.getElementById('passoBgNum');
+    const progress = document.getElementById('comoProgressFill');
+
+    // Estado inicial
+    gsap.set(itens, { opacity: 0, y: 30 });
+    gsap.set(itens[0], { opacity: 1, y: 0 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: '#como',
+        pin: true,
+        start: 'top top',
+        end: '+=250%',
+        scrub: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          if (progress) progress.style.width = (self.progress * 100) + '%';
+          if (bgNum) {
+            const step = Math.min(Math.floor(self.progress * itens.length), itens.length - 1);
+            bgNum.textContent = step + 1;
+          }
+        }
+      }
+    });
+
+    // Sequência: cada passo entra e sai, exceto o último que fica
+    itens.forEach((item, i) => {
+      if (i > 0) {
+        tl.fromTo(item, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.4 });
+      }
+      if (i < itens.length - 1) {
+        tl.to(item, { opacity: 0, y: -30, duration: 0.3 }, '+=0.5');
+      }
+    });
+  }
+
+  function initCatalogo() {
+    // Spotlight nos cards
+    const observer = new MutationObserver(() => {
+      document.querySelectorAll('.produto-card').forEach(card => {
+        if (card.dataset.spotlightInit) return;
+        card.dataset.spotlightInit = '1';
+
+        card.addEventListener('mousemove', (e) => {
+          const r = card.getBoundingClientRect();
+          card.style.setProperty('--card-mx', (e.clientX - r.left) + 'px');
+          card.style.setProperty('--card-my', (e.clientY - r.top)  + 'px');
+        });
+      });
+
+      // Grid reveal (dispara 1x quando cards aparecem)
+      const cards = document.querySelectorAll('.produtos-grid .produto-card');
+      if (cards.length > 0 && !document.querySelector('.produtos-grid').dataset.revealDone) {
+        document.querySelector('.produtos-grid').dataset.revealDone = '1';
+        gsap.to(cards, {
+          opacity: 1, y: 0, scale: 1,
+          duration: 0.55, stagger: 0.08, ease: 'power3.out',
+          scrollTrigger: { trigger: '.produtos-grid', start: 'top 85%', once: true }
+        });
+      }
+    });
+
+    const grid = document.getElementById('produtosGrid');
+    if (grid) observer.observe(grid, { childList: true });
+  }
+
+  function initTrustMarquee() {
+    const wrapper = document.getElementById('trustMarqueeWrapper');
+    if (!wrapper) return;
+
+    const getTrackWidth = () => {
+      const track = wrapper.querySelector('.trust-marquee-track');
+      return track ? track.offsetWidth : 0;
+    };
+
+    const marquee = gsap.to(wrapper, {
+      x: () => -getTrackWidth(),
+      duration: 22,
+      ease: 'none',
+      repeat: -1,
+      modifiers: {
+        x: gsap.utils.unitize(x => parseFloat(x) % getTrackWidth())
+      }
+    });
+
+    const strip = wrapper.closest('.trust-strip');
+    if (strip) {
+      strip.addEventListener('mouseenter', () => marquee.pause());
+      strip.addEventListener('mouseleave', () => marquee.play());
+    }
+  }
+
+  function initGaleria() {
+    const items = gsap.utils.toArray('.galeria-item');
+    if (items.length === 0) return;
+
+    // Stagger com direção alternada (ímpares da esquerda, pares da direita)
+    items.forEach((item, i) => {
+      const fromX = i % 2 === 0 ? -30 : 30;
+      gsap.from(item, {
+        opacity: 0, x: fromX, scale: 0.95,
+        duration: 0.65, ease: 'power3.out',
+        scrollTrigger: {
+          trigger: item,
+          start: 'top 88%',
+          once: true
+        }
+      });
+
+      // Parallax leve na imagem dentro do item
+      const img = item.querySelector('img');
+      if (img) {
+        gsap.to(img, {
+          y: -18,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1.5
+          }
+        });
+      }
+    });
+
+    // Header da galeria
+    gsap.from('.galeria-header .section-label', {
+      opacity: 0, y: 20, duration: 0.5, ease: 'power2.out',
+      scrollTrigger: { trigger: '.galeria-header', start: 'top 80%' }
+    });
+    gsap.from('.galeria-header .section-title, .galeria-header .section-subtitle', {
+      opacity: 0, y: 30, duration: 0.6, stagger: 0.15, ease: 'power3.out',
+      scrollTrigger: { trigger: '.galeria-header', start: 'top 75%' }
+    });
+    gsap.from('.galeria-footer', {
+      opacity: 0, y: 20, duration: 0.5, ease: 'power2.out',
+      scrollTrigger: { trigger: '.galeria-footer', start: 'top 90%' }
+    });
+  }
+})();
