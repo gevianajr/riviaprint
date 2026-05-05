@@ -209,3 +209,39 @@ body.cursor-hover #cursorGlow {
   z-index: -1;
   border-radius: var(--radius-pill, 999px);
 }
+
+/* ---- TRUST STRIP MARQUEE ---- */
+.trust-strip {
+  overflow: hidden;
+}
+
+/* Neutraliza o .trust-strip-inner do style.css */
+.trust-strip-inner { display: none !important; }
+
+.trust-marquee-wrapper {
+  display: flex;
+  width: max-content;
+}
+
+.trust-marquee-track {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 14px 20px;
+  flex-shrink: 0;
+}
+
+.trust-item {
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.trust-sep {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-border);
+  flex-shrink: 0;
+}

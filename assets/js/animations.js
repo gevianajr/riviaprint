@@ -32,6 +32,7 @@
     initMouseParallax();
     initMagneticButtons();
     initTrustCounter();
+    initTrustMarquee();
   }
 
   function initLenis() {
@@ -258,5 +259,31 @@
         });
       }
     });
+  }
+
+  function initTrustMarquee() {
+    const wrapper = document.getElementById('trustMarqueeWrapper');
+    if (!wrapper) return;
+
+    const getTrackWidth = () => {
+      const track = wrapper.querySelector('.trust-marquee-track');
+      return track ? track.offsetWidth : 0;
+    };
+
+    const marquee = gsap.to(wrapper, {
+      x: () => -getTrackWidth(),
+      duration: 22,
+      ease: 'none',
+      repeat: -1,
+      modifiers: {
+        x: gsap.utils.unitize(x => parseFloat(x) % getTrackWidth())
+      }
+    });
+
+    const strip = wrapper.closest('.trust-strip');
+    if (strip) {
+      strip.addEventListener('mouseenter', () => marquee.pause());
+      strip.addEventListener('mouseleave', () => marquee.play());
+    }
   }
 })();
