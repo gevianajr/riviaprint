@@ -151,6 +151,8 @@
       renderTabs(data.categorias);
       renderProducts(data.produtos, corPorCategoria);
       renderHeroProducts(data.produtos, corPorCategoria);
+      // Notifica animations.js que os hero cards foram renderizados
+      document.dispatchEvent(new CustomEvent('riviaProductsReady'));
     } catch (err) {
       console.error('[products.js] Erro ao carregar produtos:', err);
       const loading = document.getElementById('catalogoLoading');
