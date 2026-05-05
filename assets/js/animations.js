@@ -28,6 +28,7 @@
     initCursor();
     initAurora();
     initHeroTimeline();
+    initHeroCardsListener();
   }
 
   function initLenis() {
@@ -123,6 +124,71 @@
       .to('.hero .hero-ctas',        { opacity: 1, y: 0, duration: 0.5,  ease: 'power2.out' }, '-=0.35');
   }
 
-  // Placeholder — substituído na Task 8
-  function initHeroFloat() {}
+  let heroCardsInitialized = false;
+
+  function initHeroFloat() {
+    if (heroCardsInitialized) return;
+    heroCardsInitialized = true;
+    initHeroCards();
+  }
+
+  function initHeroCards() {
+    const cards = Array.from(document.querySelectorAll('#heroProducts .hero-card'));
+    if (cards.length === 0) return;
+
+    // Parâmetros de flutuação por card (máx 4 cards)
+    const floatParams = [
+      { y: -14, rotation: -2,   duration: 3.0, delay: 0   },
+      { y:  12, rotation:  1.5, duration: 3.6, delay: 0.5 },
+      { y: -10, rotation: -1.5, duration: 3.3, delay: 1.1 },
+      { y:  14, rotation:  2,   duration: 3.9, delay: 0.3 },
+    ];
+
+    // Entrada dos cards com bounce
+    gsap.fromTo(cards,
+      { opacity: 0, scale: 0.75 },
+      { opacity: 1, scale: 1, duration: 0.7, stagger: 0.12, ease: 'back.out(1.4)' }
+    );
+
+    // Float loop
+    cards.forEach((card, i) => {
+      const p = floatParams[i % floatParams.length];
+      gsap.to(card, {
+        y: p.y, rotation: p.rotation,
+        duration: p.duration, delay: p.delay,
+        yoyo: true, repeat: -1, ease: 'sine.inOut'
+      });
+    });
+
+    // Tilt 3D + spotlight
+    cards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width  - 0.5;
+        const y = (e.clientY - r.top)  / r.height - 0.5;
+        gsap.to(card, {
+          rotateY: x * 22, rotateX: -y * 22, scale: 1.05,
+          duration: 0.25, ease: 'power2.out',
+          transformPerspective: 700, overwrite: 'auto'
+        });
+        card.style.setProperty('--card-mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--card-my', (e.clientY - r.top)  + 'px');
+      });
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          rotateY: 0, rotateX: 0, scale: 1,
+          duration: 0.7, ease: 'elastic.out(1,0.5)', overwrite: 'auto'
+        });
+      });
+    });
+  }
+
+  function initHeroCardsListener() {
+    document.addEventListener('riviaProductsReady', function () {
+      if (heroCardsInitialized) return;
+      heroCardsInitialized = true;
+      initHeroCards();
+    }, { once: true });
+  }
 })();

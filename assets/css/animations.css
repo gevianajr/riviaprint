@@ -134,3 +134,35 @@ body.cursor-hover #cursorGlow {
 .hero .hero-ctas {
   opacity: 0;
 }
+
+/* ---- HERO CARDS — spotlight + tilt ---- */
+.hero-card {
+  position: relative;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Override do hover do style.css — GSAP gerencia */
+.hero-card:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Spotlight: círculo de luz que segue o cursor */
+.hero-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    200px at var(--card-mx, 50%) var(--card-my, 50%),
+    rgba(255, 255, 255, 0.55),
+    transparent 80%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-card:hover::before { opacity: 1; }
