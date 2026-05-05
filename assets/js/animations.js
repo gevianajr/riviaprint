@@ -31,6 +31,7 @@
     initHeroCardsListener();
     initMouseParallax();
     initMagneticButtons();
+    initTrustCounter();
   }
 
   function initLenis() {
@@ -231,6 +232,31 @@
       wrap.addEventListener('mouseleave', () => {
         gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,0.4)' });
       });
+    });
+  }
+
+  function initTrustCounter() {
+    const el = document.getElementById('trustCounter');
+    if (!el) return;
+
+    let triggered = false;
+
+    ScrollTrigger.create({
+      trigger: '.trust-strip',
+      start: 'top 95%',
+      onEnter: () => {
+        if (triggered) return;
+        triggered = true;
+        const obj = { val: 0 };
+        gsap.to(obj, {
+          val: 500,
+          duration: 2,
+          ease: 'power2.out',
+          onUpdate: function () {
+            el.textContent = '+' + Math.round(obj.val);
+          }
+        });
+      }
     });
   }
 })();

@@ -174,3 +174,38 @@ body.cursor-hover #cursorGlow {
   margin: -18px;       /* compensa o padding para não afetar o layout */
   vertical-align: middle;
 }
+
+/* ---- BORDER BEAM (botão primário do hero) ---- */
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes beamRotate {
+  to { --beam-angle: 360deg; }
+}
+
+.btn-beam {
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.btn-beam::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--beam-angle),
+    transparent 70%,
+    rgba(168, 85, 247, 0.85) 85%,
+    rgba(56, 134, 247, 1) 90%,
+    rgba(168, 85, 247, 0.85) 95%,
+    transparent
+  );
+  animation: beamRotate 2.5s linear infinite;
+  z-index: -1;
+  border-radius: var(--radius-pill, 999px);
+}
