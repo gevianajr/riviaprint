@@ -1,0 +1,9 @@
+/* animations.css — gerado pelo upgrade visual Full Overhaul */
+
+/* Neutraliza o sistema .reveal do CSS antigo — GSAP assume o controle */
+.reveal,
+.reveal.visible {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}
