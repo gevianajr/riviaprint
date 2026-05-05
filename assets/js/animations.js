@@ -33,6 +33,7 @@
     initMagneticButtons();
     initTrustCounter();
     initTrustMarquee();
+    initSectionReveals();
   }
 
   function initLenis() {
@@ -258,6 +259,59 @@
           }
         });
       }
+    });
+  }
+
+  function initSectionReveals() {
+    // --- Como encomendar: header ---
+    gsap.from('.como-header .section-label', {
+      opacity: 0, y: 20, duration: 0.5, ease: 'power2.out',
+      scrollTrigger: { trigger: '.como-header', start: 'top 80%' }
+    });
+    gsap.from('.como-header .section-title', {
+      opacity: 0, y: 30, duration: 0.6, ease: 'power3.out',
+      scrollTrigger: { trigger: '.como-header', start: 'top 75%' }
+    });
+
+    // --- Sobre: título ---
+    gsap.from('.sobre-header .section-label', {
+      opacity: 0, y: 20, duration: 0.5, ease: 'power2.out',
+      scrollTrigger: { trigger: '.sobre-header', start: 'top 80%' }
+    });
+    gsap.from('.sobre-header .section-title, .sobre-header .section-subtitle', {
+      opacity: 0, y: 30, duration: 0.65, stagger: 0.15, ease: 'power3.out',
+      scrollTrigger: { trigger: '.sobre-header', start: 'top 75%' }
+    });
+
+    // --- Sobre: feature cards ---
+    gsap.from('.feature', {
+      opacity: 0, y: 40, scale: 0.96,
+      duration: 0.6, stagger: 0.12, ease: 'power3.out',
+      scrollTrigger: { trigger: '.features', start: 'top 80%' }
+    });
+
+    // --- Catálogo: header ---
+    gsap.from('.catalogo-header .section-label', {
+      opacity: 0, y: 20, duration: 0.5, ease: 'power2.out',
+      scrollTrigger: { trigger: '.catalogo-header', start: 'top 80%' }
+    });
+    gsap.from('.catalogo-header .section-title, .catalogo-header .section-subtitle', {
+      opacity: 0, y: 30, duration: 0.6, stagger: 0.15, ease: 'power3.out',
+      scrollTrigger: { trigger: '.catalogo-header', start: 'top 75%' }
+    });
+
+    // --- Contato: cards com stagger diagonal ---
+    gsap.from('.contato-card', {
+      opacity: 0, y: 30, x: -10,
+      duration: 0.6, stagger: 0.15, ease: 'back.out(1.3)',
+      scrollTrigger: { trigger: '.contato-grid', start: 'top 85%' }
+    });
+
+    // --- Footer: colunas ---
+    gsap.from('.footer-brand, .footer-links, .footer-contato, .footer-redes', {
+      opacity: 0, y: 20,
+      duration: 0.5, stagger: 0.1, ease: 'power2.out',
+      scrollTrigger: { trigger: '.footer-inner', start: 'top 95%' }
     });
   }
 
