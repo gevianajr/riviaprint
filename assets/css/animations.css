@@ -7,3 +7,47 @@
   transform: none !important;
   transition: none !important;
 }
+
+/* ---- CURSOR CUSTOMIZADO ---- */
+@media (pointer: fine) {
+  html, body { cursor: none; }
+  a, button, [role="button"], .hcard, .galeria-item, .tab { cursor: none; }
+}
+
+#cursorDot {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: #3886F7;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+  will-change: left, top;
+}
+
+#cursorGlow {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(56, 134, 247, 0.35);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease;
+  will-change: left, top;
+}
+
+body.cursor-hover #cursorDot {
+  width: 14px;
+  height: 14px;
+  background: #a855f7;
+}
+
+body.cursor-hover #cursorGlow {
+  width: 52px;
+  height: 52px;
+  border-color: rgba(168, 85, 247, 0.4);
+}

@@ -25,6 +25,7 @@
   function initAnimations() {
     gsap.registerPlugin(ScrollTrigger);
     initLenis();
+    initCursor();
   }
 
   function initLenis() {
@@ -47,6 +48,43 @@
         e.preventDefault();
         lenis.scrollTo(target, { offset: -(document.getElementById('header')?.offsetHeight || 72) });
       });
+    });
+  }
+
+  function initCursor() {
+    // Ativar apenas em dispositivos com pointer preciso (desktop)
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    const dot  = document.getElementById('cursorDot');
+    const glow = document.getElementById('cursorGlow');
+    if (!dot || !glow) return;
+
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let glowX  = mouseX;
+    let glowY  = mouseY;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.style.left = mouseX + 'px';
+      dot.style.top  = mouseY + 'px';
+    });
+
+    // Glow segue com lag via rAF
+    (function loopGlow() {
+      glowX += (mouseX - glowX) * 0.12;
+      glowY += (mouseY - glowY) * 0.12;
+      glow.style.left = glowX + 'px';
+      glow.style.top  = glowY + 'px';
+      requestAnimationFrame(loopGlow);
+    })();
+
+    // Hover state em elementos interativos
+    const interactiveSelector = 'a, button, [role="button"], .tab, .galeria-item, .produto-card, .contato-card';
+    document.querySelectorAll(interactiveSelector).forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
     });
   }
 })();
