@@ -166,3 +166,11 @@ body.cursor-hover #cursorGlow {
 }
 
 .hero-card:hover::before { opacity: 1; }
+
+/* ---- BOTÕES MAGNÉTICOS ---- */
+.btn-wrap {
+  display: inline-block;
+  padding: 18px;       /* área de captura magnética */
+  margin: -18px;       /* compensa o padding para não afetar o layout */
+  vertical-align: middle;
+}

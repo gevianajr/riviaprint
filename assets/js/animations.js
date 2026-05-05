@@ -29,6 +29,8 @@
     initAurora();
     initHeroTimeline();
     initHeroCardsListener();
+    initMouseParallax();
+    initMagneticButtons();
   }
 
   function initLenis() {
@@ -190,5 +192,45 @@
       heroCardsInitialized = true;
       initHeroCards();
     }, { once: true });
+  }
+
+  function initMouseParallax() {
+    const heroBody = document.querySelector('.hero-grid');
+    const heroLeft  = document.querySelector('.hero-content');
+    const heroRight = document.querySelector('.hero-products');
+    const blob1     = document.querySelector('.hero-blob-1');
+    if (!heroBody || !heroLeft || !heroRight) return;
+
+    heroBody.addEventListener('mousemove', (e) => {
+      const r = heroBody.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width  - 0.5;
+      const y = (e.clientY - r.top)  / r.height - 0.5;
+
+      gsap.to(heroLeft,  { x: x * -16, y: y * -10, duration: 0.8, ease: 'power2.out', overwrite: 'auto' });
+      gsap.to(heroRight, { x: x *  20, y: y *  14, duration: 0.8, ease: 'power2.out', overwrite: 'auto' });
+      if (blob1) gsap.to(blob1, { x: x * 45 + 55, y: y * 32 - 38, duration: 1.2, ease: 'power2.out', overwrite: 'auto' });
+    });
+
+    heroBody.addEventListener('mouseleave', () => {
+      gsap.to([heroLeft, heroRight], { x: 0, y: 0, duration: 1.2, ease: 'power3.out' });
+    });
+  }
+
+  function initMagneticButtons() {
+    document.querySelectorAll('.btn-wrap').forEach(wrap => {
+      const btn = wrap.querySelector('.btn');
+      if (!btn) return;
+
+      wrap.addEventListener('mousemove', (e) => {
+        const r = wrap.getBoundingClientRect();
+        const x = (e.clientX - r.left - r.width  / 2) * 0.38;
+        const y = (e.clientY - r.top  - r.height / 2) * 0.38;
+        gsap.to(btn, { x, y, duration: 0.3, ease: 'power2.out' });
+      });
+
+      wrap.addEventListener('mouseleave', () => {
+        gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1,0.4)' });
+      });
+    });
   }
 })();
