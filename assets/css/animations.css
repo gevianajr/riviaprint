@@ -264,11 +264,11 @@ body.cursor-hover #cursorGlow {
   transition: width 0.05s linear;
 }
 
-.como { position: relative; }
+.como { position: relative; min-height: 100vh; }
 
 .passos-stage {
   position: relative;
-  min-height: 280px;
+  min-height: calc(100vh - 220px);
   display: flex;
   align-items: center;
   justify-content: center;
