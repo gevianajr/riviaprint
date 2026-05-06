@@ -264,7 +264,7 @@ body.cursor-hover #cursorGlow {
   transition: width 0.05s linear;
 }
 
-.como { position: relative; overflow: hidden; }
+.como { position: relative; }
 
 .passos-stage {
   position: relative;
